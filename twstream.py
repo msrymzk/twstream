@@ -38,9 +38,9 @@ class MyStreamer(TwythonStreamer):
 
       # Example Response
       # https://dev.twitter.com/rest/reference/get/statuses/show/id
-      record = {"link": "https://twitter.com/{}/status/{}".format(data["user"]["screen_name"],data["id"])}
-      record.update({k:v for k,v in data.iteritems() if k in ["created_at", "truncated", "text"]})
-      jstr = json.dumps(record, ensure_ascii=False)
+      record = {"screen_name": data["user"]["screen_name"], "link": "https://twitter.com/{}/status/{}".format(data["user"]["screen_name"],data["id"])}
+      record.update({k:v for k,v in data.iteritems() if k in ["created_at", "truncated", "text", "id"]})
+      jstr = json.dumps(record, ensure_ascii=False, sort_keys=True)
       #print(jstr)
       codecs.open("tweet.log", "a", "utf-8").write(jstr+"\n")
 
