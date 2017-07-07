@@ -40,6 +40,11 @@ class MyStreamer(TwythonStreamer):
       # https://dev.twitter.com/rest/reference/get/statuses/show/id
       record = {"screen_name": data["user"]["screen_name"], "link": "https://twitter.com/{}/status/{}".format(data["user"]["screen_name"],data["id"])}
       record.update({k:v for k,v in data.iteritems() if k in ["created_at", "truncated", "text", "id"]})
+      if data["truncated"] == True and "extended_tweet" in data and "full_text" in data["extended_tweet"]:
+          logging.debug("extend")
+          logging.debug(record["text"])
+          record["text"] = data["extended_tweet"]["full_text"]
+          logging.debug(record["text"])
       jstr = json.dumps(record, ensure_ascii=False, sort_keys=True)
       #print(jstr)
       codecs.open("tweet.log", "a", "utf-8").write(jstr+"\n")
