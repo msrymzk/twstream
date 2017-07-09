@@ -52,6 +52,8 @@ class MyStreamer(TwythonStreamer):
       #codecs.open("tweet_detail.log", "a", "utf-8").write(json.dumps(data, ensure_ascii=False)+"\n")
       record = genrecord(data)
       codecs.open("tweet.log", "a", "utf-8").write(json.dumps(record, ensure_ascii=False, sort_keys=True)+"\n")
+    else:
+      logging.debug(str(data))
 
   def on_error(self, status_code, data):
     logging.error("status_code: %d %s" % (status_code, data))
